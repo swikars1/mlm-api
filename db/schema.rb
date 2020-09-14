@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2020_09_14_035250) do
     t.bigint "customer_id", null: false
     t.bigint "retailer_id"
     t.string "payment_name", null: false
-    t.float "price", null: false
+    t.float "value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
