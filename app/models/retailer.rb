@@ -1,0 +1,2 @@
+class Retailer < ApplicationRecord
+end
