@@ -1,0 +1,29 @@
+image: 'ruby:2.5.1'
+
+services:
+  - postgres:12.4
+
+variables:
+  RAILS_ENV: test
+  POSTGRES_DB: mlm_test
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST_AUTH_METHOD: trust
+  DATABASE_URL: 'postgres://postgres:postgres@postgres:5432/mlm_test'
+
+cache:
+  paths:
+    - vendor/ruby
+
+test:
+  stage: tests
+  before_script:
+    - ruby -v # Print out ruby version for debugging
+    - apt-get update -q && apt-get install postgresql-client -yqq
+    - gem install bundler
+    - bundle config set path 'vendor'
+    - bundle install -j $(nproc)
+    - bundle exec rake db:migrate --quiet
+    - bundle exec rake db:test:prepare --quiet
+  script:
+    - bundle exec rails test
