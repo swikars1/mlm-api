@@ -9,14 +9,20 @@ Rails.application.routes.draw do
     api_constraint = ApiConstraints.new(version: version, default: default)
     scope module: "v#{version}", constraints: api_constraint, &routes
   end
+  devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', registration: 'signup' },
+                     controllers: { sessions: 'sessions', registrations: 'registrations' }
 
   namespace :api, default: { format: :json } do
     api_version(1, true) do
-      devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', registration: 'signup' },
-                         controllers: { sessions: 'sessions', registrations: 'registrations' }
 
-      resources :customers
+      resources :customers do
+        member do
+          get 'clients'
+        end
+      end
+
       resources :retailers
+      resources :retailer_types
       resources :products
     end
   end

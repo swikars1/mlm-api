@@ -5,6 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
+gem 'active_model_serializers'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 # Use postgresql as the database for Active Record
@@ -35,6 +36,7 @@ gem 'figaro', '~> 1.2.0'
 gem 'geocoder', '~> 1.6.3'
 # for image
 gem 'api-pagination'
+gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
 gem 'kaminari'
 gem 'mini_magick', '~> 4.10.1'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -49,6 +51,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'awesome_print', git: 'https://github.com/awesome-print/awesome_print.git', branch: 'master'
   gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

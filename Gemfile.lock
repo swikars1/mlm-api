@@ -1,3 +1,18 @@
+GIT
+  remote: https://github.com/awesome-print/awesome_print.git
+  revision: 4564fd74721562cbef2443f7d97109bf9192343d
+  branch: master
+  specs:
+    awesome_print (1.8.0)
+
+GIT
+  remote: https://github.com/faker-ruby/faker.git
+  revision: a7c823ccf8527ce1127e04871353021b4b4f4d6f
+  branch: master
+  specs:
+    faker (2.14.0)
+      i18n (>= 1.6, < 2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -24,6 +39,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.3)
+    active_model_serializers (0.10.10)
+      actionpack (>= 4.1, < 6.1)
+      activemodel (>= 4.1, < 6.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (5.2.4.3)
       activesupport (= 5.2.4.3)
       globalid (>= 0.3.6)
@@ -59,6 +79,8 @@ GEM
       image_processing (~> 1.1)
       mimemagic (>= 0.3.0)
       mini_mime (>= 0.1.3)
+    case_transform (0.2)
+      activesupport
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
@@ -96,6 +118,7 @@ GEM
     image_processing (1.11.0)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
+    jsonapi-renderer (0.2.2)
     jwt (2.2.2)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -249,11 +272,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   api-pagination
+  awesome_print!
   bootsnap (>= 1.1.0)
   carrierwave (~> 2.0)
   devise
   devise-jwt (~> 0.8.0)
+  faker!
   figaro (~> 1.2.0)
   geocoder (~> 1.6.3)
   kaminari
