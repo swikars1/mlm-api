@@ -5,7 +5,8 @@ class CreatePayments < ActiveRecord::Migration[5.2]
     create_table :payments do |t|
       t.bigint :customer_id, null: false
       t.bigint :retailer_id
-      t.string :payment_name, null: false
+      t.bigint :product_id
+      t.string :name, null: false
       t.float :value, null: false
 
       t.timestamps
