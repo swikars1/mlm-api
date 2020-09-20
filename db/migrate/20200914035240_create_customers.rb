@@ -5,9 +5,12 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
     create_table :customers do |t|
       t.string :name, null: false, index: true
       t.string :email
-      t.bigint :contact_number, null: false
+      t.string :phone_no, null: false
       t.float :expenditure
-      t.boolean :agent, default: false
+      t.string :gender
+      t.string :address
+      t.date :birthday
+      t.boolean :is_agent, default: false
       t.date :last_active_at
 
       t.timestamps
