@@ -16,7 +16,7 @@ cache:
     - vendor/ruby
 
 test:
-  stage: tests
+  stage: test
   before_script:
     - ruby -v # Print out ruby version for debugging
     - apt-get update -q && apt-get install postgresql-client -yqq
