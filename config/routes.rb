@@ -18,12 +18,15 @@ Rails.application.routes.draw do
       resources :customers do
         member do
           get 'clients'
+          get 'profits'
+          post 'add_payment'
         end
       end
 
       resources :retailers
       resources :retailer_types
       resources :products
+      resources :payments
     end
   end
 end

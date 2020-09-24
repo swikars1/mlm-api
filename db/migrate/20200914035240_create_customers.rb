@@ -12,6 +12,11 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.date :birthday
       t.boolean :is_agent, default: false
       t.date :last_active_at
+      t.bigint :retailer_id
+      t.bigint :parent_id
+      t.bigint :user_id
+      t.string :refer_code
+      t.date :membership_date
 
       t.timestamps
     end

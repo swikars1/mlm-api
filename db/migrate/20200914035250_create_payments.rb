@@ -7,7 +7,7 @@ class CreatePayments < ActiveRecord::Migration[5.2]
       t.bigint :retailer_id
       t.bigint :product_id
       t.string :name, null: false
-      t.float :value, null: false
+      t.float :expenditure, null: false
 
       t.timestamps
     end

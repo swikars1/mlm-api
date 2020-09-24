@@ -29,6 +29,7 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 # for image uploads
 gem 'carrierwave', '~> 2.0'
+gem 'closure_tree'
 gem 'devise'
 gem 'devise-jwt', '~> 0.8.0'
 # for heroku

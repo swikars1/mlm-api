@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_114022) do
+ActiveRecord::Schema.define(version: 2020_09_21_164802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id", null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations", null: false
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "customer_anc_desc_idx", unique: true
+    t.index ["descendant_id"], name: "customer_desc_idx"
+  end
 
   create_table "customer_products", force: :cascade do |t|
     t.bigint "customer_id"
@@ -34,11 +42,13 @@ ActiveRecord::Schema.define(version: 2020_09_20_114022) do
     t.date "birthday"
     t.boolean "is_agent", default: false
     t.date "last_active_at"
+    t.bigint "retailer_id"
+    t.bigint "parent_id"
+    t.bigint "user_id"
+    t.string "refer_code"
+    t.date "membership_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "retailer_id"
-    t.bigint "user_id"
-    t.bigint "parent_id"
     t.index ["name"], name: "index_customers_on_name"
   end
 
@@ -55,18 +65,27 @@ ActiveRecord::Schema.define(version: 2020_09_20_114022) do
     t.bigint "retailer_id"
     t.bigint "product_id"
     t.string "name", null: false
-    t.float "value", null: false
+    t.float "expenditure", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "products", force: :cascade do |t|
     t.string "name", null: false
-    t.string "type"
     t.float "price"
     t.bigint "qty"
     t.bigint "retailer_id"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "profits", force: :cascade do |t|
+    t.bigint "payment_id"
+    t.bigint "customer_id"
+    t.float "total_profit"
+    t.float "self_profit"
+    t.float "company_profit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
