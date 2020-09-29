@@ -6,11 +6,11 @@ class Payment < ApplicationRecord
   belongs_to :retailer, optional: true
   has_one :profit
 
-  CASHBACK_LIMIT = 10_000
+  CASHBACK_LIMIT = 10_000 # to determine later
 
   def distribute_profit(customer, params, product)
     price_of_product = product.price.to_f
-    # this needs chage as the profit value is not currently known
+    # this needs chage as the profit rule is not currently known
 
     main_profit = price_of_product * 0.15 * params[:qty].to_f
 
