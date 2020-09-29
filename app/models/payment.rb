@@ -8,9 +8,11 @@ class Payment < ApplicationRecord
 
   CASHBACK_LIMIT = 10_000
 
-  def distribute_profit(customer, params)
-    price_of_product = Product.find(params[:product_id]).price
-    main_profit = price_of_product * 0.15
+  def distribute_profit(customer, params, product)
+    price_of_product = product.price.to_f
+    # this needs chage as the profit value is not currently known
+
+    main_profit = price_of_product * 0.15 * params[:qty].to_f
 
     profit = customer.profits.new
     profit.payment = self

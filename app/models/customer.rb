@@ -14,7 +14,9 @@ class Customer < ApplicationRecord
   MEMBERSHIP_TARGET = 5000
 
   def handle_payment(params)
-    new_payment = payments.new(name: "Payment of #{name}", expenditure: params[:expenditure],
+    product = Product.find(params[:product_id])
+    to_spend = product.price.to_f * params[:qty].to_f
+    new_payment = payments.new(name: "Payment of #{name}", expenditure: to_spend,
                                product_id: params[:product_id], retailer_id: params[:retailer_id])
     new_payment.save && (
       update(expenditure: expenditure.to_f + new_payment.expenditure.to_f)
@@ -24,7 +26,7 @@ class Customer < ApplicationRecord
           membership_date: Time.zone.now.to_date,
           refer_code: refer_code_gen(self)
         )
-      new_payment.distribute_profit(self, params)
+      new_payment.distribute_profit(self, params, product)
     )
   end
 
