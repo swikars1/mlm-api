@@ -15,6 +15,7 @@ class Payment < ApplicationRecord
     profit = customer.profits.new
     profit.payment = self
     profit.total_profit = main_profit
+    profit.retailer_id = params[:retailer_id]
 
     # cashbask scheme
     if customer.is_agent && customer.descendants.empty?
@@ -22,14 +23,15 @@ class Payment < ApplicationRecord
       if customer.expenditure >= CASHBACK_LIMIT
         profit.self_profit = main_profit / 2
         profit.company_profit = main_profit / 2
+        profit.retailer_id = params[:retailer_id]
       end
       profit.save
     else
-      distribute_profit_to_parent(customer, main_profit)
+      distribute_profit_to_parent(customer, main_profit, params)
     end
   end
 
-  def distribute_profit_to_parent(customer, main_profit)
+  def distribute_profit_to_parent(customer, main_profit, params)
     # updating immediate parent profit
     customer.parent && (
       immediate_parent = customer.parent
@@ -37,6 +39,7 @@ class Payment < ApplicationRecord
       immediate_parent_profit.payment = self
       immediate_parent_profit.total_profit = main_profit
       immediate_parent_profit.self_profit = main_profit * 0.25
+      immediate_parent_profit.retailer_id = params[:retailer_id]
       immediate_parent_profit.save
     )
 
@@ -55,6 +58,7 @@ class Payment < ApplicationRecord
       profit.total_profit = main_profit
       profit.self_profit = main_profit / 2
       profit.company_profit = main_profit / 2
+      profit.retailer_id = params[:retailer_id]
       profit.save
     end
   end

@@ -25,6 +25,18 @@ class Api::V1::RetailersController < ApplicationController
     end
   end
 
+  def payments
+    payments = Retailer.joins(payments: :product)
+                       .joins(payments: :customer)
+                       .select('payments.*')
+                       .select('products.name as product_name')
+                       .select('products.id as product_id')
+                       .where('retailers.id = ?', params[:id])
+                       .where('customers.id = ?', params[:customer_id])
+                       .as_json
+    render json: { data: payments }, status: :ok
+  end
+
   private
 
   def retailer_params

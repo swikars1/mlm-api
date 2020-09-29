@@ -24,7 +24,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :retailers
+      resources :retailers do
+        member do
+          get 'payments'
+        end
+      end
       resources :retailer_types
       resources :products
       resources :payments
