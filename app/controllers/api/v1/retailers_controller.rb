@@ -1,6 +1,19 @@
 class Api::V1::RetailersController < ApplicationController
   def index
-    render json: { data: Retailer.all }
+    retailer_products_query = "(select json_agg(distinct jsonb_build_object(
+      'name', products.name,
+      'id', products.id,
+      'price', products.price
+    )) from products where products.retailer_id = retailers.id) as product_list"
+
+    retailer_type_query = '(select name
+      from retailer_types where retailer_types.id = retailers.retailer_type_id)
+      as retailer_type_name'
+  
+    retailer_with_products = Retailer.select('retailers.*')
+                                     .select(retailer_products_query)
+                                     .select(retailer_type_query).as_json
+    render json: { data: retailer_with_products }, status: :ok
   end
 
   def create

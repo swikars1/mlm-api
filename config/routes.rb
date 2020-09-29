@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         member do
           get 'clients'
           get 'profits'
+          get 'payments'
           post 'add_payment'
         end
       end

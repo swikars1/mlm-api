@@ -2,6 +2,8 @@
 
 class Payment < ApplicationRecord
   belongs_to :customer
+  belongs_to :product
+  belongs_to :retailer, optional: true
   has_one :profit
 
   CASHBACK_LIMIT = 10_000
@@ -32,6 +34,7 @@ class Payment < ApplicationRecord
     customer.parent && (
       immediate_parent = customer.parent
       immediate_parent_profit = immediate_parent.profits.new
+      immediate_parent_profit.payment = self
       immediate_parent_profit.total_profit = main_profit
       immediate_parent_profit.self_profit = main_profit * 0.25
       immediate_parent_profit.save
@@ -41,6 +44,7 @@ class Payment < ApplicationRecord
       ancestor_except_immediate = customer.ancestors.reject { |a| a.id == customer.parent_id }
       !ancestor_except_immediate.empty? && ancestor_except_immediate.each do |a|
         a_profit = a.profits.new
+        a_profit.payment = self
         a_profit.total_profit = main_profit
         a_profit.self_profit = (main_profit * 0.25) / ancestor_except_immediate.count
         a_profit.save

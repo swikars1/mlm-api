@@ -1,16 +1,16 @@
 class Api::V1::CustomersController < ApplicationController
   def index
-    render json: { data: Customer.all }, status: :ok
+    render_all(datas: Customer.all)
   end
 
   def show
-    render json: { data: Customer.find(params[:id]) }, status: :ok
+    render_success(data: Customer.find(params[:id]), status: 200)
   end
 
   def update
     customer = Customer.find(params[:id])
     if customer.update(update_params)
-      render json: { data: customer }, status: :ok
+      render_success(data: Customer.find(params[:id]), status: 200)
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
     end
@@ -32,20 +32,38 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def clients
-    customer = Customer.find(params[:id])
-    render json: { data: customer.children }, status: :ok
+    clients = Customer.where('customers.parent_id = ?', params[:id])
+    render_all(datas: clients)
   end
 
   def add_payment
     customer = Customer.find(params[:id])
     customer.handle_payment(params)
-    render json: { data: customer }, status: :ok
+    render_success(data: customer, status: 200)
   end
 
   def profits
-    customer = Customer.find(params[:id])
-    profits = customer.profits
+    profits = Profit.left_outer_joins(payment: :product)
+                    .left_outer_joins(:customer)
+                    .select('profits.*')
+                    .select('products.name as  product_name')
+                    .select('payments.expenditure')
+                    .where('profits.id is not null')
+                    .where('customers.id = ?', params[:id])
+                    .as_json
     render json: { data: profits }, status: :ok
+  end
+
+  def payments
+    payments = Customer.left_outer_joins(payments: :product)
+                       .left_outer_joins(payments: :retailer)
+                       .select('payments.*')
+                       .select('products.name as product_name')
+                       .select('retailers.name as retailer_name')
+                       .where('payments.id is not null')
+                       .where('customers.id = ?', params[:id])
+                       .as_json
+    render json: { data: payments }, status: :ok
   end
 
   def update_params
