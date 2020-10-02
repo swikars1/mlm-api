@@ -17,14 +17,14 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def create
-    user = User.create!(email: params[:email], password: params[:password])
-    customer = Customer.new(name: params[:name], email: params[:email], phone_no: params[:phone_no],
-                            gender: params[:gender], address: params[:address], birthday: params[:birthday])
+    user = User.create!(email: customer_params[:email], password: customer_params[:password])
+    customer = Customer.new(name: customer_params[:name], email: customer_params[:email], phone_no: customer_params[:phone_no],
+                            gender: customer_params[:gender], address: customer_params[:address], birthday: customer_params[:birthday])
 
-    customer.parent = Customer.find_by(refer_code: params[:refer_code]) if params[:refer_code]
+    customer.parent = Customer.find_by(refer_code: customer_params[:refer_code]) if customer_params[:refer_code]
     customer.user = user
     if customer.save
-      customer.handle_payment(params)
+      customer.handle_payment(customer_params)
       render json: { data: customer }, status: :ok
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
@@ -68,5 +68,9 @@ class Api::V1::CustomersController < ApplicationController
 
   def update_params
     params.permit(:phone_no, :address)
+  end
+
+  def customer_params
+    params.require(:customer)
   end
 end
