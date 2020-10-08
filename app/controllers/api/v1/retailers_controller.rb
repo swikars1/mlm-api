@@ -10,10 +10,11 @@ class Api::V1::RetailersController < ApplicationController
       from retailer_types where retailer_types.id = retailers.retailer_type_id)
       as retailer_type_name'
   
-    retailer_with_products = Retailer.select('retailers.*')
-                                     .select(retailer_products_query)
-                                     .select(retailer_type_query).as_json
-    render json: { data: retailer_with_products }, status: :ok
+    retailers = Retailer.select('retailers.*')
+                        .select(retailer_products_query)
+                        .select(retailer_type_query).as_json
+    retailers = Retailer.where('name ilike ?', "%#{params[:q]}%") unless params[:q].empty?
+    render json: { data: retailers }, status: :ok
   end
 
   def create
