@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class Customer < ApplicationRecord
-  default_scope { order(updated_at: :desc) }
-
+class Customer < ApplicationRecord 
   has_many :payments
   has_many :profits
   has_many :customer_products, dependent: :destroy

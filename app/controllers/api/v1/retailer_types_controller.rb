@@ -1,6 +1,8 @@
 class Api::V1::RetailerTypesController < ApplicationController
   def index
-    render json: { data: RetailerType.all }, status: :ok
+    retailer_types = RetailerType.all
+    retailer_types = RetailerType.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    render json: { data: retailer_types }, status: :ok
   end
 
   def create
@@ -12,9 +14,31 @@ class Api::V1::RetailerTypesController < ApplicationController
     end
   end
 
+  def show
+   render_success(data: RetailerType.find(params[:id]), status: 200)
+  end
+
+  def destroy
+    retailer_type = RetailerType.find(params[:id])
+    if retailer_type.destroy
+      render json: { data: RetailerType.all }, status: :ok
+    else
+      render json: { errors: retailer_type.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    retailer_type = RetailerType.find(params[:id])
+    if retailer_type.update(retailer_type_params)
+      render json: { data: retailer_type }, status: :ok
+    else
+      render json: { errors: retailer_type.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def retailer_type_params
-    params.permit(:name, :pan_number, :phone_no)
+    params.require(:retailer_type).permit(:name)
   end
 end

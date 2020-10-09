@@ -17,10 +17,32 @@ class Api::V1::RetailersController < ApplicationController
     render json: { data: retailers }, status: :ok
   end
 
+  def show
+    render_success(data: Retailer.find(params[:id]), status: 200)
+  end
+
   def create
     retailer = Retailer.new(retailer_params)
     if retailer.save
       render json: { data: retailer }, status: :ok
+    else
+      render json: { errors: retailer.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    retailer = Retailer.find(params[:id])
+    if retailer.update(retailer_params)
+      render_success(data: Retailer.find(params[:id]), status: 200)
+    else
+      render json: { errors: retailer.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    retailer = Retailer.find(params[:id])
+    if retailer.destroy
+      render json: { data: Retailer.all }, status: :ok
     else
       render json: { errors: retailer.errors.full_messages }, status: :unprocessable_entity
     end
@@ -41,6 +63,6 @@ class Api::V1::RetailersController < ApplicationController
   private
 
   def retailer_params
-    params.permit(:name, :pan_number, :phone_no, :retailer_type_id)
+    params.require(:retailer).permit(:name, :pan_number, :phone_no, :retailer_type_id, :address)
   end
 end
