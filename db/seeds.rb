@@ -26,14 +26,18 @@ end
 end
 
 15.times do
+  phone_no = Faker::PhoneNumber.cell_phone_with_country_code
+  gender = Faker::Gender.binary_type
+  name = Faker::Name.name
   email = Faker::Internet.email
-  user = User.create(email: email, password: 'password')
+  user = User.create(email: email, password: 'password', name: name,
+                     gender: gender, phone_no: phone_no, role: "customer")
   Customer.create(
-    name: Faker::Name.name,
+    name: name,
     email: email,
-    phone_no: Faker::PhoneNumber.cell_phone_with_country_code,
+    phone_no: phone_no,
     user_id: user.id,
-    gender: Faker::Gender.binary_type,
+    gender: gender,
     birthday: Faker::Date.between(from: '1980-09-23', to: '2000-09-25'),
     address: Faker::Address.full_address
   )

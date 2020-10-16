@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :retailer_types
       resources :products
       resources :payments
+      resources :users
     end
   end
 end

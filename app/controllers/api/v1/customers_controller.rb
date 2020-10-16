@@ -17,7 +17,9 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def create
-    user = User.create!(email: customer_params[:email], password: customer_params[:password])
+    user = User.create!(email: customer_params[:email], password: customer_params[:password],
+                        name: customer_params[:name], phone_no: customer_params[:phone_no], 
+                        gender: customer_params[:gender], role: 'customer')
     customer = Customer.new(name: customer_params[:name], email: customer_params[:email],
                             phone_no: customer_params[:phone_no], gender: customer_params[:gender],
                             address: customer_params[:address], birthday: customer_params[:birthday])
@@ -48,7 +50,7 @@ class Api::V1::CustomersController < ApplicationController
 
   def add_payment
     customer = Customer.find(params[:id])
-    customer.handle_payment(params)
+    customer.handle_payment(params[:customer])
     render_success(data: customer, status: 200)
   end
 
