@@ -3,10 +3,8 @@ class Api::V1::PaymentsController < ApplicationController
   	# binding.pry
     payments = Payment.all
     payments = payments.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
-    # payments = payments.where(retailer_id: params[:retailer_id]) if params[:retailer_id]
-    # payments = payments.where(product_id: params[:product_id]) if params[:product_id]
-    # payments = payments.where(customer_id: params[:customer_id]) if params[:customer_id]
-    render json: { data: payments }, status: :ok
+    # render json: { data: payments, each_serializer: each_serializer }, status: :ok
+    render_all(datas: payments)
   end
 
   def show

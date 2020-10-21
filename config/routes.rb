@@ -31,9 +31,17 @@ Rails.application.routes.draw do
         end
       end
       resources :retailer_types
-      resources :products
+      resources :products do
+        member do
+          post 'upload_image'
+        end
+      end
       resources :payments
-      resources :users
+      resources :users do
+        member do
+          post 'upload_image'
+        end
+      end
     end
   end
 end

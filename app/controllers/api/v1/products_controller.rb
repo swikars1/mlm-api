@@ -28,6 +28,16 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
+  def upload_image
+    product = Product.find(params['id'])
+    product.avatar.attach(params['image'])
+    if product.avatar.attach(params['image'])
+      render_success(data: product, status: 200)
+    else
+      render json: { errors: product.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     product = Product.find(params[:id])
     if product.destroy

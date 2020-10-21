@@ -26,6 +26,16 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def upload_image
+    user = User.find(params['id'])
+    user.avatar.attach(params['image'])
+    if user.avatar.attach(params['image'])
+      render_success(data: user, status: 200)
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     user = User.find(params[:id])
     if user.destroy
