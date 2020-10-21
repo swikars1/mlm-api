@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :retailers do
         member do
           get 'payments'
+          post 'upload_image'
         end
       end
       resources :retailer_types

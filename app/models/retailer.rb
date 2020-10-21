@@ -5,4 +5,6 @@ class Retailer < ApplicationRecord
   has_many :products
   has_many :payments
   belongs_to :retailer_type
+
+  has_one_attached :avatar
 end

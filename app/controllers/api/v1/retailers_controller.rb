@@ -39,6 +39,16 @@ class Api::V1::RetailersController < ApplicationController
     end
   end
 
+  def upload_image
+    retailer = Retailer.find(params['id'])
+    retailer.avatar.attach(params['image'])
+    if retailer.avatar.attach(params['image'])
+      render_success(data: retailer, status: 200)
+    else
+      render json: { errors: retailer.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     retailer = Retailer.find(params[:id])
     if retailer.destroy
