@@ -16,7 +16,8 @@ class Customer < ApplicationRecord
   def handle_payment(params)
     product = Product.find(params[:product_id])
     to_spend = product.price.to_f * params[:qty].to_f
-    new_payment = payments.new(name: "Payment of #{name}", expenditure: to_spend, qty: params[:qty],
+    payment_name = params[:name] ||"Payment of #{name}"
+    new_payment = payments.new(name: payment_name, expenditure: to_spend, qty: params[:qty],
                                product_id: params[:product_id], retailer_id: params[:retailer_id])
     new_payment.save && (
       update(expenditure: expenditure.to_f + new_payment.expenditure.to_f)
