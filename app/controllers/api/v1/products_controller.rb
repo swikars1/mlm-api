@@ -3,7 +3,7 @@ class Api::V1::ProductsController < ApplicationController
     products = Product.all
     products = products.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
     products = products.where(retailer_id: params[:retailer_id]) if params[:retailer_id]
-    render json: { data: products }, status: :ok
+    render_all(datas: products)
   end
 
   def show
@@ -49,7 +49,8 @@ class Api::V1::ProductsController < ApplicationController
 
   private
   def product_params
-  	params.require(:product).permit :name, :price, :description, :retailer_id, :code
+  	params.require(:product).permit :name, :price, :description, :retailer_id, :code, :category_ids =>[]
+
   end
 
 end
