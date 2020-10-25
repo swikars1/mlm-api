@@ -30,13 +30,18 @@ Rails.application.routes.draw do
           post 'upload_image'
         end
       end
+
       resources :retailer_types
+      resources :categories
+
       resources :products do
         member do
           post 'upload_image'
         end
       end
+
       resources :payments
+
       resources :users do
         member do
           post 'upload_image'
