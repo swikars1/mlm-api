@@ -10,7 +10,6 @@ class Customer < ApplicationRecord
   belongs_to :parent, class_name: 'Customer', optional: true
 
   has_closure_tree
-
   MEMBERSHIP_TARGET = 5000
 
   def handle_payment(params)
