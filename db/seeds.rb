@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 retailer_types = ['Wholesales', 'Clothes Distributer', 'Herbal Supplier', 'Food Supplier', 'Electronics Supplier']
+categories = ['Pant', 'Shirt', 'Microphone', 'Food type', 'Electrical']
 
 retailer_types.each do |r|
   RetailerType.create(name: r)
+end
+
+categories.each do |r|
+  Category.create(name: r)
 end
 
 15.times do
@@ -23,7 +28,8 @@ puts "retailers created"
     name: Faker::Appliance.equipment,
     price: Faker::Number.between(from: 3000, to: 6000),
     description: Faker::Games::Dota.quote,
-    qty: Faker::Number.between(from: 1, to: 100)
+    qty: Faker::Number.between(from: 1, to: 100),
+    category_ids: [Category.find_by(name: categories.sample).id]
   )
 end
 puts "products created"

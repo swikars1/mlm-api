@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         member do
           get 'payments'
           post 'upload_image'
+          get 'products'
         end
       end
 

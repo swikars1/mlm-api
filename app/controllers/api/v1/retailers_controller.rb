@@ -58,6 +58,11 @@ class Api::V1::RetailersController < ApplicationController
     end
   end
 
+  def products
+    retailer = Retailer.find(params[:id])
+    render json: { data: retailer.products }, status: :ok
+  end
+
   def payments
     payments = Retailer.joins(payments: :product)
                        .joins(payments: :customer)
