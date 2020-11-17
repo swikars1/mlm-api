@@ -30,7 +30,7 @@ module Mlm
         resource(
           '*',
           headers: :any,
-          expose: ['Authorization'],
+          expose: ['access-token', 'expiry', 'token-type', 'uid', 'client', :total, :per_page, :page, :extra_headers],
           methods: %i[get patch put delete post options show]
         )
       end

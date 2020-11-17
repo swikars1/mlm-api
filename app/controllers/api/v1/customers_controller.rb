@@ -18,7 +18,7 @@ class Api::V1::CustomersController < ApplicationController
 
   def create
     user = User.create!(email: customer_params[:email], password: customer_params[:password],
-                        name: customer_params[:name], phone_no: customer_params[:phone_no], 
+                        name: customer_params[:name], phone_no: customer_params[:phone_no],
                         gender: customer_params[:gender], role: 'customer')
     customer = Customer.new(name: customer_params[:name], email: customer_params[:email],
                             phone_no: customer_params[:phone_no], gender: customer_params[:gender],

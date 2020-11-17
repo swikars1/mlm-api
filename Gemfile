@@ -30,8 +30,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # for image uploads
 gem 'carrierwave', '~> 2.0'
 gem 'closure_tree'
-gem 'devise'
-gem 'devise-jwt', '~> 0.8.0'
+gem 'devise_token_auth'
 # for heroku
 gem 'figaro', '~> 1.2.0'
 gem 'geocoder', '~> 1.6.3'

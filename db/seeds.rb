@@ -16,6 +16,8 @@ end
   )
 end
 
+puts "retailers created"
+
 15.times do
   Product.create(
     name: Faker::Appliance.equipment,
@@ -24,13 +26,14 @@ end
     qty: Faker::Number.between(from: 1, to: 100)
   )
 end
+puts "products created"
 
 15.times do
   phone_no = Faker::PhoneNumber.cell_phone_with_country_code
   gender = Faker::Gender.binary_type
   name = Faker::Name.name
   email = Faker::Internet.email
-  user = User.create(email: email, password: 'password', name: name,
+  user = User.create(email: email, password: 'password', name: name, username: email.split('@').first,
                      gender: gender, phone_no: phone_no, role: "customer")
   Customer.create(
     name: name,
@@ -42,3 +45,4 @@ end
     address: Faker::Address.full_address
   )
 end
+puts "users created"

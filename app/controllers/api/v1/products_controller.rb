@@ -38,6 +38,18 @@ class Api::V1::ProductsController < ApplicationController
     end
   end
 
+  def recent
+    render json: { data: Product.order(:created_at).first(5) }, status: :ok
+  end
+
+  def featured
+    render json: { data: Product.order(:updated_at).first(5) }, status: :ok
+  end
+
+  def popular
+    render json: { data: Product.all.sample(5) }, status: :ok
+  end
+
   def destroy
     product = Product.find(params[:id])
     if product.destroy
@@ -48,9 +60,9 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   private
+  
   def product_params
-  	params.require(:product).permit :name, :price, :description, :retailer_id, :code, :category_ids =>[]
-
+    params.require(:product).permit :name, :price, :description, :retailer_id, :code, category_ids: []
   end
 
 end

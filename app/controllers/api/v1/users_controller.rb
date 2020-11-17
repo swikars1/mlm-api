@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+
   def index
     users = User.all
     render json: { data: users }, status: :ok
@@ -46,6 +47,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
+  
   def user_params
   	params.require(:user).permit(:email, :name, :gender, :role, :phone_no)
   end

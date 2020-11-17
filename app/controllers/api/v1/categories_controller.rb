@@ -2,7 +2,7 @@ class Api::V1::CategoriesController < ApplicationController
   def index
     categories = Category.all
     categories = Category.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
-    render json: { data: categories }, status: :ok
+    render_all(datas: categories)
   end
 
   def create
@@ -15,7 +15,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def show
-   render_success(data: Category.find(params[:id]), status: 200)
+    render_success(data: Category.find(params[:id]), status: 200)
   end
 
   def destroy
@@ -34,6 +34,11 @@ class Api::V1::CategoriesController < ApplicationController
     else
       render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def products
+    category = Category.find(params[:id])
+    render json: { data: category.products }, status: :ok
   end
 
   private

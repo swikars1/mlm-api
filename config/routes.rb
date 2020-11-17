@@ -9,12 +9,15 @@ Rails.application.routes.draw do
     api_constraint = ApiConstraints.new(version: version, default: default)
     scope module: "v#{version}", constraints: api_constraint, &routes
   end
-  devise_for :users, path: '', path_names: { sign_in: 'login', sign_out: 'logout', registration: 'signup' },
-                     controllers: { sessions: 'sessions', registrations: 'registrations' }
+
 
   namespace :api, default: { format: :json } do
-    api_version(1, true) do
-
+    namespace :v1 do
+      mount_devise_token_auth_for 'User', at: 'auth',
+                                        controllers: {
+                                          registrations: 'api/overrides/registrations',
+                                          sessions: 'api/overrides/sessions'
+                                        }
       resources :customers do
         member do
           get 'clients'
@@ -32,11 +35,20 @@ Rails.application.routes.draw do
       end
 
       resources :retailer_types
-      resources :categories
+      resources :categories do
+        member do
+          get 'products'
+        end
+      end
 
       resources :products do
         member do
           post 'upload_image'
+        end
+        collection do
+          get 'recent'
+          get 'featured'
+          get 'popular'
         end
       end
 

@@ -1,9 +1,7 @@
 class Api::V1::PaymentsController < ApplicationController
   def index
-  	# binding.pry
     payments = Payment.all
     payments = payments.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
-    # render json: { data: payments, each_serializer: each_serializer }, status: :ok
     render_all(datas: payments)
   end
 
