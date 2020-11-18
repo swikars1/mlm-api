@@ -37,7 +37,7 @@ class Api::V1::CustomersController < ApplicationController
   def destroy
     customer = Customer.find(params[:id])
     if customer.destroy
-      render json: { data: Customer.all }, status: :ok
+      render_all(datas: Customer.all)
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
     end

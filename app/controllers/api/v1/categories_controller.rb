@@ -21,7 +21,7 @@ class Api::V1::CategoriesController < ApplicationController
   def destroy
     category = Category.find(params[:id])
     if category.destroy
-      render json: { data: Category.all }, status: :ok
+    render_all(datas: Category.all)
     else
       render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
     end

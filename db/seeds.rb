@@ -11,17 +11,6 @@ categories.each do |r|
   Category.create(name: r)
 end
 
-15.times do
-  Retailer.create(
-    name: Faker::Appliance.brand,
-    phone_no: Faker::PhoneNumber.cell_phone_with_country_code,
-    address: Faker::Address.full_address,
-    pan_number: Faker::Number.leading_zero_number(digits: 10),
-    retailer_type_id: RetailerType.find_by(name: retailer_types.sample).id
-  )
-end
-
-puts "retailers created"
 
 15.times do
   Product.create(
@@ -33,6 +22,19 @@ puts "retailers created"
   )
 end
 puts "products created"
+
+15.times do
+  Retailer.create(
+    name: Faker::Appliance.brand,
+    phone_no: Faker::PhoneNumber.cell_phone_with_country_code,
+    address: Faker::Address.full_address,
+    pan_number: Faker::Number.leading_zero_number(digits: 10),
+    retailer_type_id: RetailerType.find_by(name: retailer_types.sample).id,
+    product_ids: [Product.all.sample.id]
+  )
+end
+
+puts "retailers created"
 
 15.times do
   phone_no = Faker::PhoneNumber.cell_phone_with_country_code

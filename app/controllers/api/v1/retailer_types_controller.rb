@@ -2,7 +2,7 @@ class Api::V1::RetailerTypesController < ApplicationController
   def index
     retailer_types = RetailerType.all
     retailer_types = RetailerType.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
-    render json: { data: retailer_types }, status: :ok
+    render_all(datas: retailer_types)
   end
 
   def create
@@ -21,7 +21,7 @@ class Api::V1::RetailerTypesController < ApplicationController
   def destroy
     retailer_type = RetailerType.find(params[:id])
     if retailer_type.destroy
-      render json: { data: RetailerType.all }, status: :ok
+      render_all(datas: RetailerType.all)
     else
       render json: { errors: retailer_type.errors.full_messages }, status: :unprocessable_entity
     end

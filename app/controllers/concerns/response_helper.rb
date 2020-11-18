@@ -20,10 +20,11 @@ module ResponseHelper
     render json: { errors: errors, message: message, description: description }.to_json, status: status
   end
 
-  def render_all(datas:, each_serializer: nil, root: 'data', requested_by: 'vue', meta_data: {}, message: nil)
+  def render_all(datas:, each_serializer: nil, root: 'data', requested_by: 'vue', response_all: false, meta_data: {}, message: nil)
     return render json: { data: datas, message: message }, meta: meta_data if datas.blank?
 
-    response_hash = { json: datas, each_serializer: each_serializer || "#{datas.model.name}Serializer".constantize, root: root, requested_by: requested_by, meta: meta_data, status: 200 }
+    response_datas = response_all ? datas : paginate(datas)
+    response_hash = { json: response_datas, each_serializer: each_serializer || "#{datas.model.name}Serializer".constantize, root: root, requested_by: requested_by, meta: meta_data, status: 200 }
 
     render(response_hash)
   end
