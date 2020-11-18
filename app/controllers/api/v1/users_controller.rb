@@ -1,8 +1,7 @@
 class Api::V1::UsersController < ApplicationController
 
   def index
-    users = User.all
-    render json: { data: users }, status: :ok
+    render_all(datas: User.all)
   end
 
   def show
@@ -10,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.new(payment_params)
+    user = User.new(user_params)
     if user.save
       render json: { data: user }, status: :ok
     else
@@ -20,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    if user.update(payment_params)
+    if user.update(user_params)
       render_success(data: User.find(params[:id]), status: 200)
     else
       render json: { errors: User.errors.full_messages }, status: :unprocessable_entity
@@ -40,7 +39,7 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     if user.destroy
-      render json: { data: User.all }, status: :ok
+      rrender_all(datas: User.all)
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end

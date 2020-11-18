@@ -18,7 +18,7 @@ class Api::V1::PaymentsController < ApplicationController
   def destroy
     payment = Payment.find(params[:id])
     if payment.destroy
-      render json: { data: Payment.all }, status: :ok
+      render_all(datas: Payment.all)
     else
       render json: { errors: payment.errors.full_messages }, status: :unprocessable_entity
     end
