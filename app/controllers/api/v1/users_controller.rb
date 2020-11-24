@@ -1,7 +1,9 @@
 class Api::V1::UsersController < ApplicationController
 
   def index
-    render_all(datas: User.all)
+    users = User.all
+    users = User.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    render_all(datas: users)
   end
 
   def show

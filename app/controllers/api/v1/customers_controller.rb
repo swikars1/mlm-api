@@ -1,6 +1,8 @@
 class Api::V1::CustomersController < ApplicationController
   def index
-    render_all(datas: Customer.all)
+    customers = Customer.all
+    customers = Customer.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    render_all(datas: customers)
   end
 
   def show
