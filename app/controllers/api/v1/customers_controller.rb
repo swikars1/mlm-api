@@ -80,6 +80,21 @@ class Api::V1::CustomersController < ApplicationController
     render json: { data: payments }, status: :ok
   end
 
+  def upload_bill
+    customer = Customer.find(params['id'])
+    customer.bill.attach(params['image'])
+    if customer.bill.attach(params['image'])
+      render_success(data: customer, status: 200)
+    else
+      render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def my_profits
+    customer = Customer.find(params[:id])
+    render json: { data: customer.profits }, status: :ok
+  end
+
   def update_params
     params.require(:customer).permit(:name, :phone_no, :birthday, :address)
   end

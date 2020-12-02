@@ -10,12 +10,15 @@ class Customer < ApplicationRecord
   belongs_to :parent, class_name: 'Customer', optional: true
 
   has_closure_tree
+
+  has_one_attached :bill
+
   MEMBERSHIP_TARGET = 5000
 
   def handle_payment(params)
     product = Product.find(params[:product_id])
     to_spend = product.price.to_f * params[:qty].to_f
-    payment_name = params[:name] ||"Payment of #{name}"
+    payment_name = params[:name] || "Payment of #{name}"
     new_payment = payments.new(name: payment_name, expenditure: to_spend, qty: params[:qty],
                                product_id: params[:product_id], retailer_id: params[:retailer_id])
     new_payment.save && (
