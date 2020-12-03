@@ -73,6 +73,7 @@ class Api::V1::CustomersController < ApplicationController
                        .left_outer_joins(payments: :retailer)
                        .select('payments.*')
                        .select('products.name as product_name')
+                       .select('products.price as product_price')
                        .select('retailers.name as retailer_name')
                        .where('payments.id is not null')
                        .where('customers.id = ?', params[:id])
