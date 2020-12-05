@@ -1,4 +1,4 @@
-class Api::V1::ProductsController < ApplicationController
+15class Api::V1::ProductsController < ApplicationController
   def index
     products = Product.all
     products = products.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
@@ -39,15 +39,15 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def recent
-    render json: { data: Product.order(:created_at).first(5) }, status: :ok
+    render_all(datas: Product.order(:created_at).first(15), each_serializer: ::ProductSerializer)
   end
 
   def featured
-    render json: { data: Product.order(:updated_at).first(5) }, status: :ok
+    render_all(datas: Product.order(:updated_at).first(15), each_serializer: ::ProductSerializer)
   end
 
   def popular
-    render json: { data: Product.all.sample(5) }, status: :ok
+    render_all(datas: Product.all.sample(15), each_serializer: ::ProductSerializer)
   end
 
   def destroy

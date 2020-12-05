@@ -21,7 +21,7 @@ class Api::V1::CategoriesController < ApplicationController
   def destroy
     category = Category.find(params[:id])
     if category.destroy
-    render_all(datas: Category.all)
+      render_all(datas: Category.all)
     else
       render json: { errors: category.errors.full_messages }, status: :unprocessable_entity
     end
@@ -38,7 +38,12 @@ class Api::V1::CategoriesController < ApplicationController
 
   def products
     category = Category.find(params[:id])
-    render json: { data: category.products }, status: :ok
+    render_all(datas: category.products, each_serializer: ::ProductSerializer)
+  end
+
+  def mobile
+    categories = Category.all
+    render_all(datas: categories, response_all: true)
   end
 
   private

@@ -96,6 +96,18 @@ class Api::V1::CustomersController < ApplicationController
     render json: { data: customer.profits }, status: :ok
   end
 
+  def search_all
+    search_params = params[:q]
+    render json: { data: search_maker('product', search_params) +
+                         search_maker('retailer', search_params) +
+                         search_maker('category', search_params) }, status: :ok
+  end
+
+  def search_maker(model_name, search_params)
+    query = "select id, name, '#{model_name}' as type from #{model_name.pluralize} where name ilike '%#{search_params}%'"
+    ActiveRecord::Base.connection.execute(query).as_json
+  end
+
   def update_params
     params.require(:customer).permit(:name, :phone_no, :birthday, :address)
   end
