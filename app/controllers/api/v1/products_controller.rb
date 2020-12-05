@@ -1,4 +1,4 @@
-15class Api::V1::ProductsController < ApplicationController
+class Api::V1::ProductsController < ApplicationController
   def index
     products = Product.all
     products = products.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
