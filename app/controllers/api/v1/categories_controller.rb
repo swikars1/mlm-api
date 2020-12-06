@@ -38,7 +38,7 @@ class Api::V1::CategoriesController < ApplicationController
 
   def products
     category = Category.find(params[:id])
-    render_all(datas: category.products, each_serializer: ::ProductSerializer)
+    render_all(datas: category.products, each_serializer: ::ProductSerializer, response_all: true)
   end
 
   def mobile
