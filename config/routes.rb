@@ -25,6 +25,7 @@ Rails.application.routes.draw do
           get 'profits'
           get 'payments'
           get 'my_profits'
+          get 'bills'
           post 'add_payment'
           post 'upload_bill'
         end
