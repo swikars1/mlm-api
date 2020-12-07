@@ -11,7 +11,7 @@ class Customer < ApplicationRecord
 
   has_closure_tree
 
-  has_one_attached :bill
+  has_many_attached :bills
 
   MEMBERSHIP_TARGET = 5000
 

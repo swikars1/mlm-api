@@ -108,6 +108,15 @@ class Api::V1::CustomersController < ApplicationController
     ActiveRecord::Base.connection.execute(query).as_json
   end
 
+  def bills
+    urls = []
+    customer = Customer.find(params[:id])
+    customer.bills.map do |bill|
+      urls.push(customer.image_url(bill))
+    end
+    render json: { data: urls }, status: :ok
+  end
+
   def update_params
     params.require(:customer).permit(:name, :phone_no, :birthday, :address)
   end
