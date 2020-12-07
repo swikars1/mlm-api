@@ -83,8 +83,8 @@ class Api::V1::CustomersController < ApplicationController
 
   def upload_bill
     customer = Customer.find(params['id'])
-    customer.bill.attach(params['image'])
-    if customer.bill.attach(params['image'])
+    customer.bills.attach(params['image'])
+    if customer.bills.attach(params['image'])
       render_success(data: customer, status: 200)
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
