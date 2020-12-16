@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: localhost
+  # host: localhost
 
 development:
   <<: *default
@@ -15,5 +15,5 @@ test:
 production:
   <<: *default
   database: mlm_production
-  username: mlm
-  password: <%= ENV['MLM_DATABASE_PASSWORD'] %>
+  username: sunil
+  password: bhakaritraders
