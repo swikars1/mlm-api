@@ -81,10 +81,11 @@ class Api::V1::CustomersController < ApplicationController
     render json: { data: payments }, status: :ok
   end
 
+
   def upload_bill
     customer = Customer.find(params['id'])
-    customer.bill.attach(params['image'])
-    if customer.bill.attach(params['image'])
+    customer.bills.attach(params['image'])
+    if customer.bills.attach(params['image'])
       render_success(data: customer, status: 200)
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
@@ -94,6 +95,18 @@ class Api::V1::CustomersController < ApplicationController
   def my_profits
     customer = Customer.find(params[:id])
     render json: { data: customer.profits }, status: :ok
+  end
+
+  def search_all
+    search_params = params[:q]
+    render json: { data: search_maker('product', search_params) +
+                         search_maker('retailer', search_params) +
+                         search_maker('category', search_params) }, status: :ok
+  end
+
+  def search_maker(model_name, search_params)
+    query = "select id, name, '#{model_name}' as type from #{model_name.pluralize} where name ilike '%#{search_params}%'"
+    ActiveRecord::Base.connection.execute(query).as_json
   end
 
   def update_params

@@ -18,12 +18,14 @@ Rails.application.routes.draw do
                                           registrations: 'api/overrides/registrations',
                                           sessions: 'api/overrides/sessions'
                                         }
+      get 'search_all' => 'customers#search_all'
       resources :customers do
         member do
           get 'clients'
           get 'profits'
           get 'payments'
           get 'my_profits'
+          get 'bills'
           post 'add_payment'
           post 'upload_bill'
         end
@@ -39,6 +41,9 @@ Rails.application.routes.draw do
 
       resources :retailer_types
       resources :categories do
+        collection do
+          get 'mobile'
+        end
         member do
           get 'products'
         end
@@ -60,6 +65,12 @@ Rails.application.routes.draw do
       resources :users do
         member do
           post 'upload_image'
+        end
+      end
+
+      resources :dashboard do
+        collection do
+          get 'widgets'
         end
       end
     end
