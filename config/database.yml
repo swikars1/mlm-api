@@ -7,13 +7,18 @@ default: &default
 development:
   <<: *default
   database: mlm_development
+  username: sunil
+  password: bhakaritraders
+  
 
 test:
   <<: *default
   database: mlm_test
+  username: sunil
+  password: bhakaritraders
 
 production:
   <<: *default
   database: mlm_production
   username: sunil
-  password: <%= ENV['MLM_DATABASE_PASSWORD'] %>
+  password: bhakaritraders
