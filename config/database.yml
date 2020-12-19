@@ -7,18 +7,18 @@ default: &default
 development:
   <<: *default
   database: mlm_development
-  username: sunil
-  password: password
+  username: postgres
+  password: bhakari
   
 
 test:
   <<: *default
   database: mlm_test
-  username: sunil
-  password: password
+  username: postgres
+  password: bhakari
 
 production:
   <<: *default
   database: mlm_production
-  username: sunil
-  password: password
+  username: postgres
+  password: bhakari
