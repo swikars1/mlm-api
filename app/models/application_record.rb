@@ -7,9 +7,16 @@ class ApplicationRecord < ActiveRecord::Base
   default_scope { order(updated_at: :desc) }
 
   def image_url(avatar)
-  	return if avatar&.attachment.nil?
+    return unless avatar&.attached?
 
-  	"#{app_setting['host_domain']}#{rails_blob_path(avatar, only_path: true)}"
+    final_url = "#{app_setting['host_domain']}#{rails_blob_path(avatar, only_path: true)}"
+    final_url
+  end
+
+  def image_list_url(image_list)
+    image_list.map do |f|
+      "#{app_setting['host_domain']}#{rails_blob_path(f, only_path: true)}"
+    end
   end
 
   def app_setting

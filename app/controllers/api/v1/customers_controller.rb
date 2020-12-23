@@ -81,7 +81,6 @@ class Api::V1::CustomersController < ApplicationController
     render json: { data: payments }, status: :ok
   end
 
-
   def upload_bill
     customer = Customer.find(params['id'])
     customer.bills.attach(params['image'])

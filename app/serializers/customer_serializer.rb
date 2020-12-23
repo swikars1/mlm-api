@@ -6,9 +6,8 @@ class CustomerSerializer < ActiveModel::Serializer
   end
 
   def bills
-    bill_urls = object.bills.map do |bill|
-      object.image_url(bill)
-    end
-    bill_urls
+    return unless object.bills.attached?
+    
+    object.image_list_url(object.bills)
   end
 end
