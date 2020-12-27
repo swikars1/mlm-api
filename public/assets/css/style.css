@@ -90,9 +90,7 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(42, 44, 57, 0.9);
 }
 
-div.logo{
-  display: contents;
-}
+
 
 #header .logo h1 {
   font-size: 28px;
@@ -111,7 +109,7 @@ div.logo{
 #header .logo img {
   padding: 0;
   margin: 0;
-  max-height: 40px;
+  max-height: 200px;
 }
 
 /*--------------------------------------------------------------
@@ -1268,6 +1266,7 @@ section {
 .contact .info {
   width: 100%;
   background: #fff;
+  display: flex;
 }
 
 .contact .info i {
@@ -1293,15 +1292,15 @@ section {
 }
 
 .contact .info p {
-  padding: 0 0 0 60px;
+  padding: 0 100px 0 60px;
   margin-bottom: 0;
   font-size: 14px;
   color: #555974;
 }
 
-.contact .info .email, .contact .info .phone {
+/*.contact .info .email, .contact .info .phone {
   margin-top: 40px;
-}
+}*/
 
 .contact .info .email:hover i, .contact .info .address:hover i, .contact .info .phone:hover i {
   background: #ef6603;
