@@ -26,10 +26,9 @@ class Api::V1::CustomersController < ApplicationController
                             phone_no: customer_params[:phone_no], gender: customer_params[:gender],
                             address: customer_params[:address], birthday: customer_params[:birthday])
 
-    customer.parent = Customer.find_by(refer_code: customer_params[:refer_code]) if customer_params[:refer_code]
+    customer.parent = Customer.first || nil
     customer.user = user
     if customer.save
-      customer.handle_payment(customer_params)
       render json: { data: customer }, status: :ok
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
@@ -83,12 +82,21 @@ class Api::V1::CustomersController < ApplicationController
 
   def upload_bill
     customer = Customer.find(params['id'])
-    customer.bills.attach(params['image'])
     if customer.bills.attach(params['image'])
       render_success(data: customer, status: 200)
     else
       render json: { errors: customer.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def upload_image
+    customer = Customer.find(params[:id])
+    if params[:type] == 'front'
+      customer.id_front.attach(params['image'])
+    else
+      customer.id_back.attach(params['image'])
+    end
+    render_success(data: customer, status: 200)
   end
 
   def my_profits
@@ -109,7 +117,7 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def update_params
-    params.require(:customer).permit(:name, :phone_no, :birthday, :address)
+    params.require(:customer).permit(:name, :phone_no, :birthday, :address, :gender)
   end
 
   def customer_params

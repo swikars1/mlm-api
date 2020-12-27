@@ -12,33 +12,21 @@ class Customer < ApplicationRecord
   has_closure_tree
 
   has_many_attached :bills
-
-  MEMBERSHIP_TARGET = 5000
+  has_one_attached :id_front
+  has_one_attached :id_back
 
   def handle_payment(params)
-    product = Product.find(params[:product_id])
-    to_spend = product.price.to_f * params[:qty].to_f
-    payment_name = params[:name] || "Payment of #{name}"
-    new_payment = payments.new(name: payment_name, expenditure: to_spend, qty: params[:qty],
-                               product_id: params[:product_id], retailer_id: params[:retailer_id])
+    payment_name = params[:name] || 'Product Payment'
+    new_payment = payments.new(name: payment_name, expenditure: params[:expenditure],
+                               retailer_id: params[:retailer_id], bill_no: params[:bill_no])
     new_payment.save && (
       update(expenditure: expenditure.to_f + new_payment.expenditure.to_f)
-      !is_agent && expenditure_this_month(params[:id] || id) >= MEMBERSHIP_TARGET &&
-        update(
-          is_agent: true,
-          membership_date: Time.zone.now.to_date,
-          refer_code: refer_code_gen(self)
-        )
-      new_payment.distribute_profit(self, params, product)
+      new_payment.distribute_profit(self, params)
     )
   end
 
   def expenditure_this_month(customer_id)
     Payment.where('customer_id = ? and created_at between ? and ?', customer_id, Time.zone.now - 1.month, Time.zone.now)
            .sum(:expenditure)
-  end
-
-  def refer_code_gen(customer)
-    "#{customer.name.split(' ').first.downcase}_#{customer.id + 100}"
   end
 end

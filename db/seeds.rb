@@ -50,7 +50,8 @@ puts "retailers created"
     user_id: user.id,
     gender: gender,
     birthday: Faker::Date.between(from: '1980-09-23', to: '2000-09-25'),
-    address: Faker::Address.full_address
+    address: Faker::Address.full_address,
+    parent: Customer.first || nil
   )
 end
 puts "users created"

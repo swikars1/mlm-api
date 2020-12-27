@@ -67,6 +67,6 @@ class Api::V1::RetailersController < ApplicationController
   private
 
   def retailer_params
-    params.require(:retailer).permit(:name, :pan_number, :phone_no, :retailer_type_id, :address)
+    params.require(:retailer).permit(:name, :pan_number, :phone_no, :retailer_type_id, :address, :percent)
   end
 end

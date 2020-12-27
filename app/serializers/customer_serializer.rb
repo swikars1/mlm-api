@@ -1,5 +1,6 @@
 class CustomerSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :phone_no, :gender, :address, :birthday, :expenditure, :refer_code, :image_url, :bills
+  attributes :id, :name, :email, :phone_no, :gender, :address, :birthday, :expenditure, :refer_code, :image_url,
+             :bills, :front_url, :back_url
 
   def image_url
   	object.image_url(object.user.avatar)
@@ -10,4 +11,13 @@ class CustomerSerializer < ActiveModel::Serializer
     
     object.image_list_url(object.bills)
   end
+
+  def front_url
+    object.image_url(object.id_front)
+  end
+
+  def back_url
+    object.image_url(object.id_back)
+  end
+
 end

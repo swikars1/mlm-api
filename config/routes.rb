@@ -28,6 +28,7 @@ Rails.application.routes.draw do
           get 'bills'
           post 'add_payment'
           post 'upload_bill'
+          post 'upload_image'
         end
       end
 
@@ -71,6 +72,7 @@ Rails.application.routes.draw do
       resources :dashboard do
         collection do
           get 'widgets'
+          get 'gender_pie_chart'
         end
       end
     end

@@ -10,6 +10,6 @@ class PaymentSerializer < ActiveModel::Serializer
   end
 
   def product
-  	object.product.name
+  	object.product&.name
   end
 end
