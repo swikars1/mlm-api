@@ -3,3 +3,4 @@
 require 'devise/orm/active_record'
 
 Devise.secret_key = '62a6ee064e525398d67cf7060eb43413b5f38a88775102909879d9f6b117f32d4e4217d174b0e56f6de5f1781e5e6f8be6842ac9fe86de61dbdef7adbf7363d5'
+
