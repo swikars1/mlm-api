@@ -3,4 +3,4 @@ development:
 staging:
   host_domain: https://mlm-pyramid.herokuapp.com
 production:
-  host_domain: https://mlm-pyramid.herokuapp.com
+  host_domain: http://bhakaritraders.com
