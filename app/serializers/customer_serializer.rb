@@ -31,5 +31,4 @@ class CustomerSerializer < ActiveModel::Serializer
   def status
     object.is_active ? 'Active' : 'Inactive'
   end
-
 end

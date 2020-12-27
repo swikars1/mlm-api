@@ -34,6 +34,7 @@ class Payment < ApplicationRecord
       end
     else
       # after first month
+
       if customer.expenditure.to_f >= PROFIT_LIMIT
         profit.self_profit = main_profit * 0.25
         profit.company_profit = all_parents_inactive_flag ? main_profit * 0.75 : main_profit / 2
