@@ -26,8 +26,9 @@ class Api::V1::PaymentsController < ApplicationController
   end
 
   private
+
   def payment_params
-  	params.require(:payment).permit(:customer_id, :retailer_id, :product_id, :name, :expenditure)
+  	params.require(:payment).permit(:customer_id, :retailer_id, :name, :expenditure, :bill_no)
   end
 
 end

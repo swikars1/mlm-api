@@ -20,9 +20,13 @@ class Customer < ApplicationRecord
     new_payment = payments.new(name: payment_name, expenditure: params[:expenditure],
                                retailer_id: params[:retailer_id], bill_no: params[:bill_no])
     new_payment.save && (
-      update(expenditure: expenditure.to_f + new_payment.expenditure.to_f)
+      update(expenditure: expenditure.to_f + new_payment.expenditure.to_f, last_active_at: Time.zone.now.to_date)
       new_payment.distribute_profit(self, params)
     )
+  end
+
+  def is_active
+    !last_active_at.nil?
   end
 
   def expenditure_this_month(customer_id)

@@ -1,5 +1,5 @@
 class PaymentSerializer < ActiveModel::Serializer
-  attributes :id, :name, :expenditure, :customer, :retailer, :product
+  attributes :id, :name, :expenditure, :customer, :retailer, :percent, :cashback
 
   def customer
   	object.customer.name
@@ -9,7 +9,11 @@ class PaymentSerializer < ActiveModel::Serializer
   	object.retailer&.name
   end
 
-  def product
-  	object.product&.name
+  def percent
+    object.retailer&.percent
+  end
+
+  def cashback
+    object.expenditure * (object.retailer&.percent.to_f / 100)
   end
 end

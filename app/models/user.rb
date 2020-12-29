@@ -7,4 +7,8 @@ class User < ApplicationRecord
   
   has_one :customer, dependent: :destroy
   has_one_attached :avatar
+  
+  def customer?
+    role === 'customer'
+  end
 end

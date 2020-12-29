@@ -1,0 +1,4 @@
+:schedule:
+  customer_deactivate:
+    class: CustomerDeactivateJob
+    cron: '0 1 * * * Asia/Kathmandu' # Runs everymidnight at 1AM

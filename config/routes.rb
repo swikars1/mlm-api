@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       resources :users do
         member do
           post 'upload_image'
+          post 'update_password'
         end
       end
 

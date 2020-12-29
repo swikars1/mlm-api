@@ -20,6 +20,8 @@ class Payment < ApplicationRecord
       profit.self_profit = 0
       profit.company_profit = main_profit / 2
       customer.ancestors.each do |a|
+        next unless a.is_active
+
         a_profit = a.profits.new
         a_profit.payment = self
         a_profit.self_profit = (main_profit / 2) / customer.ancestors.count
@@ -31,6 +33,8 @@ class Payment < ApplicationRecord
       profit.self_profit = main_profit * 0.25
       profit.company_profit = main_profit / 2
       customer.ancestors.each do |a|
+        next unless a.is_active
+
         a_profit = a.profits.new
         a_profit.payment = self
         a_profit.self_profit = (main_profit * 0.25) / customer.ancestors.count

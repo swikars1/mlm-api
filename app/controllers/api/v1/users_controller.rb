@@ -1,8 +1,8 @@
 class Api::V1::UsersController < ApplicationController
 
   def index
-    users = User.all
-    users = User.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    users = User.where(role: 'admin')
+    users = users.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
     render_all(datas: users)
   end
 
@@ -47,10 +47,27 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update_password
+    user = User.find(params[:id])
+    if user.valid_password?(params[:current_password])
+      if user.update(password_params)
+        render json: { data: ['Successful'] }, status: :ok
+      else
+        render_error(status: 422, errors: user.errors.full_messages)
+      end
+    else
+      render_error(status: 422, errors: ['Current password is incorrect'])
+    end
+  end
+
   private
   
   def user_params
-  	params.require(:user).permit(:email, :name, :gender, :role, :phone_no)
+  	params.require(:user).permit(:email, :name, :gender, :role, :phone_no, :password)
+  end
+
+  def password_params
+    params.permit(:password, :password_confirmation)
   end
 
 end

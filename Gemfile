@@ -34,6 +34,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave', '~> 2.0'
 gem 'closure_tree'
 gem 'devise_token_auth'
+gem 'sidekiq', '~> 6.1.2'
 # for heroku
 gem 'figaro', '~> 1.2.0'
 gem 'geocoder', '~> 1.6.3'
