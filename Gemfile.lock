@@ -271,7 +271,7 @@ DEPENDENCIES
   figaro (~> 1.2.0)
   geocoder (~> 1.6.3)
   kaminari
-  listen (>= 3.0.5, < 3.2)
+  listen (>= 3.1.5, < 3.2)
   mini_magick (~> 4.10.1)
   pg (>= 0.18, < 2.0)
   pry
