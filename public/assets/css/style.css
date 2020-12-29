@@ -381,11 +381,14 @@ h1, h2, h3, h4, h5, h6 {
   height: auto;
 }
 img.img-fluid1 {
-    top: 1rem;
-    height: 26rem;
-    left: -1rem;
+    top: 0rem;
+    height: 9rem;
+    left: 29rem;
     position: absolute;
+    width: 10rem;
+    transform: scale(1.5);
 }
+
 
 #hero .btn-get-started {
   font-family: "Raleway", sans-serif;
