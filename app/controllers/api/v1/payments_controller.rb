@@ -2,6 +2,7 @@ class Api::V1::PaymentsController < ApplicationController
   def index
     payments = Payment.all
     payments = payments.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    payments = payments.where(customer_id: params[:customer_id]) if params[:customer_id]
     render_all(datas: payments)
   end
 

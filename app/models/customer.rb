@@ -10,7 +10,7 @@ class Customer < ApplicationRecord
   belongs_to :parent, class_name: 'Customer', optional: true
 
   has_closure_tree
-
+  
   has_many_attached :bills
   has_one_attached :id_front
   has_one_attached :id_back
