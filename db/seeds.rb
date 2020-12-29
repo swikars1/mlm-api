@@ -55,6 +55,6 @@ puts "retailers created"
   )
 end
 
-User.create(email: 'admin@bhakari.com', password: 'password', name: 'admin', username: admin,
+User.create(email: 'admin@bhakari.com', password: 'password', name: 'admin', username: 'admin',
                      gender: 'Male', phone_no: 9877877889, role: 'admin')
 puts "users created"
