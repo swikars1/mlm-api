@@ -380,6 +380,12 @@ h1, h2, h3, h4, h5, h6 {
   width: auto;
   height: auto;
 }
+img.img-fluid1 {
+    top: 1rem;
+    height: 26rem;
+    left: -1rem;
+    position: absolute;
+}
 
 #hero .btn-get-started {
   font-family: "Raleway", sans-serif;
