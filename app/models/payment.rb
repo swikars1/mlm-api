@@ -5,6 +5,7 @@ class Payment < ApplicationRecord
   belongs_to :product, optional: true
   belongs_to :retailer, optional: true
   has_one :profit
+  has_one_attached :bill
 
   def distribute_profit(customer, params)
     retailer = Retailer.find(params[:retailer_id])
