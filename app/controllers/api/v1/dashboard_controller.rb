@@ -4,7 +4,7 @@ class Api::V1::DashboardController < ApplicationController
       total_customers: Customer.all.count,
       total_retailers: Retailer.all.count,
       total_products: Product.all.count,
-      today_income: Profit.where('created_at between ? and ?', Time.zone.now - 1.day, Time.zone.now)
+      today_income: Profit.where('created_at between ? and ?', Time.zone.now.beginning_of_day, Time.zone.now)
                           .sum(:company_profit),
       monthly_income: Profit.where('created_at between ? and ?', Time.zone.now - 1.month, Time.zone.now)
                             .sum(:company_profit),
