@@ -21,7 +21,8 @@ class CustomerSerializer < ActiveModel::Serializer
   end
 
   def todays_income
-    object.profits.where('created_at between ? and ?', Time.zone.now.beginning_of_day, Time.zone.now).sum(:self_profit).round(2)
+    object.profits.where('created_at between ? and ?', Time.zone.now.beginning_of_day, Time.zone.now)
+          .sum(:self_profit).round(2)
   end
 
   def monthly_income
