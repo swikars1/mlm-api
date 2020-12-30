@@ -3,7 +3,7 @@ class PaymentSerializer < ActiveModel::Serializer
              :self_profit, :company_profit, :each_parent_profit, :profit_parent_count
 
   def customer
-  	object.customer.name
+  	object.customer&.name || 'DELETED'
   end
 
   def retailer

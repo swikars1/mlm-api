@@ -74,6 +74,7 @@ Rails.application.routes.draw do
         collection do
           get 'widgets'
           get 'gender_pie_chart'
+          get 'line_chart'
         end
       end
     end

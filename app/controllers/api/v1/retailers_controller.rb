@@ -1,7 +1,13 @@
 class Api::V1::RetailersController < ApplicationController
   def index
     retailers = Retailer.all
-    retailers = Retailer.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    if !params[:q]&.empty?
+      retailers = Retailer.where('name ilike ? ', "%#{params[:q]}%")
+                          .or(Retailer.where(id: params[:q]))
+                          .or(Retailer.where('email ilike ?', "%#{params[:q]}%"))
+                          .or(Retailer.where('phone_no ilike ?', "%#{params[:q]}%"))
+                          .or(Retailer.where('pan_number ilike ?', "%#{params[:q]}%"))
+    end
     render_all(datas: retailers)
 
   end
@@ -30,8 +36,7 @@ class Api::V1::RetailersController < ApplicationController
 
   def upload_image
     retailer = Retailer.find(params['id'])
-    retailer.avatar.attach(params['image'])
-    if retailer.avatar.attach(params['image'])
+    if retailer.avatars.attach(params['image'])
       render_success(data: retailer, status: 200)
     else
       render json: { errors: retailer.errors.full_messages }, status: :unprocessable_entity

@@ -26,4 +26,21 @@ class Api::V1::DashboardController < ApplicationController
     ]
     render json: { data: pie_data }
   end
+
+  def line_chart
+    i = 11
+    line_data = []
+    x_axis = []
+    10.times do
+      i -= 1
+      line_data.push(Profit.where('created_at between ? and ?', Time.zone.now - i.days, Time.zone.now - (i - 1).days)
+               .sum(:company_profit))
+      x_axis.push((Time.zone.now - i.days).strftime('%b %d'))
+    end
+    final = {
+      x_axis: x_axis,
+      line_data: line_data
+    }
+    render json: { data: final }
+  end
 end

@@ -5,7 +5,7 @@ class Customer < ApplicationRecord
   has_many :profits
   has_many :customer_products, dependent: :destroy
   has_many :products, through: :customer_products
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   has_many :children, class_name: 'Customer', foreign_key: 'parent_id'
   belongs_to :parent, class_name: 'Customer', optional: true
 

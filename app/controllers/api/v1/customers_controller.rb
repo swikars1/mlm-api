@@ -1,7 +1,12 @@
 class Api::V1::CustomersController < ApplicationController
   def index
     customers = Customer.all
-    customers = Customer.where('name ilike ?', "%#{params[:q]}%") unless params[:q]&.empty?
+    if !params[:q]&.empty?
+      customers = Customer.where('name ilike ?', "%#{params[:q]}%")
+                          .or(Customer.where('email ilike ?', "%#{params[:q]}%"))
+                          .or(Customer.where('phone_no ilike ?', "%#{params[:q]}%"))
+                          .or(Customer.where(id: params[:q]))
+    end
     render_all(datas: customers)
   end
 
