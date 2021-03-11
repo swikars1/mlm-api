@@ -1,0 +1,6 @@
+development:
+  host_domain: http://localhost:3000
+staging:
+  host_domain: https://mlm-pyramid.herokuapp.com
+production:
+  host_domain: http://bhakaritraders.com
